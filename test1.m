@@ -3,7 +3,7 @@ n = 100;
 % A matrix, A is column stochastic
 Adj = rand(n);
 Adj = double(Adj > 0.6);
-Adj = Adj .* (1 - eye(n));
+Adj = Adj .* (1 - eye(n));  % remove self circle
 
 G = digraph(Adj);
 plot(G);
