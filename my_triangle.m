@@ -1,5 +1,5 @@
-function [has_solution, x] = my_triangle(A, b, tol)
-if nargin < 3 || isempty(tol)
+function [has_solution, x, cnt] = my_triangle(A, b, start, tol)
+if nargin < 4 || isempty(tol)
     tol = 1e-4;
 end
 [d, n] = size(A);  % dimension and number of points
@@ -8,12 +8,16 @@ has_solution = true;
 x = nan;
 B = [A, -b];
 p = zeros(d, 1);
-a_pp = rand(n+1, 1);
-a_pp = a_pp / sum(a_pp);
+if nargin < 3 || isempty(start)
+    start = rand(n+1, 1);
+end
+a_pp = start / sum(start);
+
 % i = randi([1 n+1], 1);
 % a_v = zeros(n+1, 1);
 % a_v(i) = 1;
 % a_pp = a_v;
+
 pp = B * a_pp;
 
 cnt = 0;
@@ -53,3 +57,20 @@ for i = 1:n
         break;
     end
 end
+
+
+% function [pivot_exists, v, i] = find_pivot(A, p, pp)
+% [~, n] = size(A);
+% pivot_exists = false;
+% v = nan;
+% ddd = zeros(n, 1);
+% for i = 1:n
+%     vi = A(:,i);
+%     ddd(i) = norm(pp-vi)-norm(p-vi);
+% end
+% [B, I] = sort(ddd);
+% if B(end) >= 0
+%     pivot_exists = true;
+%     i = I(end);
+%     v = A(:,i);
+% end
